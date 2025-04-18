@@ -1,12 +1,16 @@
-function App() {
+import { Outlet } from "react-router-dom"
+import AppHeader from "./components/layout/app.header"
+
+function Layout() {
 
   return (
     <>
       <div>
-        Vinhbgdm
+        <AppHeader />
+        <Outlet />
       </div>  
     </>
   )
 }
 
-export default App
+export default Layout
