@@ -1,6 +1,8 @@
-import { Button, Divider, Form, FormProps, Input } from "antd";
+import { App, Button, Divider, Form, FormProps, Input } from "antd";
 import { useState } from "react"
 import "./register.scss"
+import { useNavigate } from 'react-router-dom';
+import { registerAPI } from "@/services/api";
 
 type FieldType = {
     fullName: string;
@@ -10,10 +12,23 @@ type FieldType = {
 };
 
 const Register = () => {
+    const navigate = useNavigate();
+    const { message } = App.useApp();
     const [isSubmit, setIsSubmit] = useState(false);
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        console.log('Success:', values);
+        setIsSubmit(true);
+        const {email, fullName, password, phone} = values;
+
+        const res = await registerAPI(fullName, email, password, phone);
+        if(res.data) {
+            message.success("Đăng kí user thành công.")
+            navigate("/login")
+        } else {
+            message.error(res.message)
+        }
+        setIsSubmit(false);
+        navigate("/login")
     };
 
     return (
@@ -71,14 +86,14 @@ const Register = () => {
 
                             <Form.Item>
                                 <Button type="primary" htmlType="submit" loading={isSubmit}>
-                                    Đăng kí
+                                    Đăng ký
                                 </Button>
                             </Form.Item>
                             <Divider>Or</Divider>
                             <p className="text text-normal" style={{ textAlign: "center" }}>
                                 Đã có tài khoản ?
-                                <a className="primary" style={{ color: "#1677ff", margin: "5px" }}>
-                                    Đăng nhập
+                                <a className="btn-primary" onClick={() => {navigate('/login')}}>
+                                    &nbsp; Đăng nhập
                                 </a>
                             </p>
                         </Form>
