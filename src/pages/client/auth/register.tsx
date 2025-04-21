@@ -18,10 +18,10 @@ const Register = () => {
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true);
-        const {email, fullName, password, phone} = values;
+        const { email, fullName, password, phone } = values;
 
         const res = await registerAPI(fullName, email, password, phone);
-        if(res.data) {
+        if (res.data) {
             message.success("Đăng kí user thành công.")
             navigate("/login")
         } else {
@@ -92,7 +92,7 @@ const Register = () => {
                             <Divider>Or</Divider>
                             <p className="text text-normal" style={{ textAlign: "center" }}>
                                 Đã có tài khoản ?
-                                <a className="btn-primary" onClick={() => {navigate('/login')}}>
+                                <a className="btn-primary" onClick={() => { navigate('/login') }}>
                                     &nbsp; Đăng nhập
                                 </a>
                             </p>

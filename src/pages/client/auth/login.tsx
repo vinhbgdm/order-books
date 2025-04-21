@@ -13,16 +13,16 @@ type FieldType = {
 
 const Login = () => {
     const navigate = useNavigate();
-    const {message, notification} = App.useApp();
+    const { message, notification } = App.useApp();
     const [isSubmit, setIsSubmit] = useState(false);
-    const {setIsAuthenticated, setUser} = useCurrentApp();
+    const { setIsAuthenticated, setUser } = useCurrentApp();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true);
-        const {username, password} = values;
+        const { username, password } = values;
 
         const res = await loginAPI(username, password);
-        if(res?.data) {
+        if (res?.data) {
             setIsAuthenticated(true);
             setUser(res.data.user);
             localStorage.setItem('access_token', res.data.access_token);
@@ -32,7 +32,7 @@ const Login = () => {
             notification.error({
                 message: "Có lỗi xảy ra",
                 description:
-                    res.message && Array.isArray(res.message) ? res.message[0]: res.message,
+                    res.message && Array.isArray(res.message) ? res.message[0] : res.message,
                 duration: 5
             })
         }
@@ -83,7 +83,7 @@ const Login = () => {
                             <Divider>Or</Divider>
                             <p className="text text-normal" style={{ textAlign: "center" }}>
                                 Chưa có tài khoản ?
-                                <a className="btn-primary" onClick={() => {navigate('/register')}}>
+                                <a className="btn-primary" onClick={() => { navigate('/register') }}>
                                     &nbsp; Đăng ký
                                 </a>
                             </p>

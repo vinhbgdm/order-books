@@ -12,40 +12,40 @@ import { App } from "antd";
 import { AppProvider } from "components/context/app.context";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "/book",
-        element: <BookPage />,
-      },
-      {
-        path: "/about",
-        element: <AboutPage />,
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
+    {
+        path: "/",
+        element: <Layout />,
+        children: [
+            {
+                index: true,
+                element: <HomePage />,
+            },
+            {
+                path: "/book",
+                element: <BookPage />,
+            },
+            {
+                path: "/about",
+                element: <AboutPage />,
+            },
+        ],
+    },
+    {
+        path: "/login",
+        element: <Login />,
+    },
+    {
+        path: "/register",
+        element: <Register />,
+    },
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App>
-      <AppProvider>
-        <RouterProvider router={router} />
-      </AppProvider>
-    </App>
-  </StrictMode>,
+    <StrictMode>
+        <App>
+            <AppProvider>
+                <RouterProvider router={router} />
+            </AppProvider>
+        </App>
+    </StrictMode>,
 );
