@@ -4,6 +4,7 @@ import './login.scss';
 import { useState } from "react";
 import type { FormProps } from "antd";
 import { loginAPI } from "@/services/api";
+import { useCurrentApp } from "@/components/context/app.context";
 
 type FieldType = {
     username: string;
@@ -12,8 +13,9 @@ type FieldType = {
 
 const Login = () => {
     const navigate = useNavigate();
-    const { message, notification } = App.useApp();
+    const {message, notification} = App.useApp();
     const [isSubmit, setIsSubmit] = useState(false);
+    const {setIsAuthenticated, setUser} = useCurrentApp();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true);
@@ -21,8 +23,10 @@ const Login = () => {
 
         const res = await loginAPI(username, password);
         if(res?.data) {
-            localStorage.setItem('access_token', res.data.access_token)
-            message.success("Đăng nhập tài khoản thành công.")
+            setIsAuthenticated(true);
+            setUser(res.data.user);
+            localStorage.setItem('access_token', res.data.access_token);
+            message.success("Đăng nhập tài khoản thành công.");
             navigate("/")
         } else {
             notification.error({
