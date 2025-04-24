@@ -47,4 +47,16 @@ declare global {
     interface IFetchAccount {
         user: IUser;
     }
+
+    interface IUserTable {
+        _id: string;
+        fullName: string;
+        email: string;
+        phone: string;
+        role: string;
+        avatar: string;
+        isActive: boolean;
+        createAt: Date;
+        updateAt: Date;
+    }
 }
