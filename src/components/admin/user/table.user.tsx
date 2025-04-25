@@ -3,64 +3,7 @@ import { dateRangeValidate } from '@/services/helper';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components'
 import { useRef, useState } from 'react';
-
-const columns: ProColumns<IUserTable>[] = [
-    {
-        dataIndex: 'index',
-        valueType: 'indexBorder',
-        width: 48,
-    },
-    {
-        title: 'ID',
-        dataIndex: '_id',
-        hideInSearch: true,
-        render(dom, entity, index, action, schema) {
-            return (
-                <a href="#">{entity._id}</a>
-            )
-        }
-    },
-    {
-        title: 'Fullname',
-        dataIndex: 'fullName',
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-        copyable: true
-    },
-    {
-        title: 'CreateAt',
-        dataIndex: 'createAt',
-        valueType: 'date',
-        sorter: true,
-        hideInSearch: true,
-    },
-    {
-        title: 'CreateAt',
-        dataIndex: 'createAtRange',
-        valueType: 'dateRange',
-        hideInTable: true,
-    },
-    {
-        title: 'Action',
-        hideInSearch: true,
-        render() {
-            return (
-                <>
-                    <EditTwoTone
-                        twoToneColor='#f57800'
-                        style={{ cursor: 'pointer', marginRight: 15 }}
-                    />
-                    <DeleteTwoTone
-                        twoToneColor='#ff4d4f'
-                        style={{ cursor: 'pointer', marginRight: 15 }}
-                    />
-                </>
-            )
-        },
-    },
-];
+import DetailUser from './detail.user';
 
 type TSearch = {
     fullName: string;
@@ -77,6 +20,68 @@ const TableUser = () => {
         pages: 0,
         total: 0
     });
+
+    const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
+    const [dataViewDetail, setDataViewDetail] = useState<IUserTable | null>(null);
+
+    const columns: ProColumns<IUserTable>[] = [
+        {
+            dataIndex: 'index',
+            valueType: 'indexBorder',
+            width: 48,
+        },
+        {
+            title: 'ID',
+            dataIndex: '_id',
+            hideInSearch: true,
+            render(dom, entity, index, action, schema) {
+                return (
+                    <a href="#" onClick={() => { setDataViewDetail(entity); setOpenViewDetail(true) }}>{entity._id}</a>
+                )
+            }
+        },
+        {
+            title: 'Fullname',
+            dataIndex: 'fullName',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            copyable: true
+        },
+        {
+            title: 'CreateAt',
+            dataIndex: 'createAt',
+            valueType: 'date',
+            sorter: true,
+            hideInSearch: true,
+        },
+        {
+            title: 'CreateAt',
+            dataIndex: 'createAtRange',
+            valueType: 'dateRange',
+            hideInTable: true,
+        },
+        {
+            title: 'Action',
+            hideInSearch: true,
+            render() {
+                return (
+                    <>
+                        <EditTwoTone
+                            twoToneColor='#f57800'
+                            style={{ cursor: 'pointer', marginRight: 15 }}
+                        />
+                        <DeleteTwoTone
+                            twoToneColor='#ff4d4f'
+                            style={{ cursor: 'pointer', marginRight: 15 }}
+                        />
+                    </>
+                )
+            },
+        },
+    ];
+
     return (
         <>
             <ProTable<IUserTable, TSearch>
@@ -126,9 +131,13 @@ const TableUser = () => {
                     showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} in {total} rows</div>) }
                 }}
                 headerTitle='Table user'
-            >
-
-            </ProTable >
+            />
+            <DetailUser
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+                setDataViewDetail={setDataViewDetail}
+            />
         </>
     )
 }
