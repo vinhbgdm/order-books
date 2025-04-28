@@ -1,9 +1,11 @@
 import { getUsersAPI } from '@/services/api';
 import { dateRangeValidate } from '@/services/helper';
-import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components'
 import { useRef, useState } from 'react';
 import DetailUser from './detail.user';
+import { Button } from 'antd';
+import CreateUser from './create.user';
 
 type TSearch = {
     fullName: string;
@@ -23,6 +25,7 @@ const TableUser = () => {
 
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
     const [dataViewDetail, setDataViewDetail] = useState<IUserTable | null>(null);
+    const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
 
     const columns: ProColumns<IUserTable>[] = [
         {
@@ -82,6 +85,10 @@ const TableUser = () => {
         },
     ];
 
+    const refreshTable = () => {
+        actionRef.current?.reload();
+    }
+
     return (
         <>
             <ProTable<IUserTable, TSearch>
@@ -107,6 +114,9 @@ const TableUser = () => {
                         }
                     }
 
+                    //default
+                    query += `&sort=-createAt`;
+
                     if (sort && sort.createAt) {
                         query += `&sort=${sort.createAt === 'ascend' ? 'createAt' : '-createAt'}`
                     }
@@ -131,12 +141,30 @@ const TableUser = () => {
                     showTotal: (total, range) => { return (<div>{range[0]}-{range[1]} in {total} rows</div>) }
                 }}
                 headerTitle='Table user'
+                toolBarRender={() => [
+                    <Button
+                        key="button"
+                        icon={<PlusOutlined />}
+                        onClick={() => {
+                            setOpenModalCreate(true);
+                        }}
+                        type="primary"
+                    >
+                        Add new
+                    </Button>
+                ]}
             />
             <DetailUser
                 openViewDetail={openViewDetail}
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
+            />
+
+            <CreateUser
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                refreshTable={refreshTable}
             />
         </>
     )
