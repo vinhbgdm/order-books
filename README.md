@@ -15,3 +15,5 @@ npm install --save-exact react-icons@5.5.0
 npm install --save-exact @ant-design/pro-components@2.8.7
 
 npm install --save-exact dayjs@1.11.13 (convert date)
+
+npm install --save-exact exceljs@4.4.0 (excel)

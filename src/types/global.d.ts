@@ -59,4 +59,10 @@ declare global {
         createAt: Date;
         updateAt: Date;
     }
+
+    interface IResponseImport {
+        countSuccess: number;
+        countError: number;
+        detail: any;
+    }
 }
