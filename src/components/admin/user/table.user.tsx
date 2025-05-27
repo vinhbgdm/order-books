@@ -117,11 +117,10 @@ const TableUser = () => {
                     }
 
                     //default
-                    query += `&sort=-createAt`;
 
                     if (sort && sort.createAt) {
                         query += `&sort=${sort.createAt === 'ascend' ? 'createAt' : '-createAt'}`
-                    }
+                    } else query += `&sort=-createAt`;
 
                     const res = await getUsersAPI(query);
                     if (res.data) {

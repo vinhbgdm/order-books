@@ -3,6 +3,7 @@ import { App, Modal, notification, Table, Upload, UploadProps } from "antd";
 import { useState } from "react";
 import Exceljs from 'exceljs';
 import { bulkCreateUsersAPI } from "@/services/api";
+import templateFile from "assets/template/user.xlsx?url";
 
 const { Dragger } = Upload;
 
@@ -22,7 +23,10 @@ const ImportUser = (props: IProps) => {
     const { openModalImport, setOpenModalImport, refreshTable } = props;
 
     const { message } = App.useApp();
-    const [dataImport, setDataImport] = useState<IDataImport[]>([]);
+    const [dataImport, setDataImport] = useState<IDataImport[]>([
+        { fullName: 'Ninh Đình Vinh', email: 'ninhdvinh2001@gmail.com', phone: '0964635524' },
+        { fullName: 'Ninh Đình Đức', email: 'ninhdvinh2002@gmail.com', phone: '0964635524' }
+    ]);
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
     const propsUpload: UploadProps = {
@@ -132,6 +136,12 @@ const ImportUser = (props: IProps) => {
                     <p className="ant-upload-text">Click or drag file to this area to upload</p>
                     <p className="ant-upload-hint">
                         Support for a single upload. Only accept .scv, .xls, .xlsx
+                        &nbsp; <a
+                            onClick={e => e.stopPropagation()}
+                            href={templateFile} download
+                        >
+                            Dowmload Sample File
+                        </a>
                     </p>
                 </Dragger>
                 <div className="">

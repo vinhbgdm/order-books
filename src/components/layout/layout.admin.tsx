@@ -44,17 +44,17 @@ const LayoutAdmin = () => {
 
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
 
-    if (isAuthenticated === false) {
-        return (<Outlet />)
-    }
+    // if (isAuthenticated === false) {
+    //     return (<Outlet />)
+    // }
 
-    const isAdminRoute = location.pathname.includes("admin");
-    if (isAuthenticated === true && isAdminRoute === true) {
-        const role = user?.role;
-        if (role === "USER") {
-            return (<Outlet />)
-        }
-    }
+    // const isAdminRoute = location.pathname.includes("admin");
+    // if (isAuthenticated === true && isAdminRoute === true) {
+    //     const role = user?.role;
+    //     if (role === "USER") {
+    //         return (<Outlet />)
+    //     }
+    // }
 
     return (
         <>
