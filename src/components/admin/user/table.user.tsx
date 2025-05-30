@@ -9,6 +9,7 @@ import CreateUser from './create.user';
 import ImportUser from './import.user';
 import { CSVLink } from 'react-csv';
 import UpdateUser from './update.user';
+import dayjs from 'dayjs';
 
 type TSearch = {
     fullName: string;
@@ -85,6 +86,13 @@ const TableUser = () => {
             valueType: 'date',
             sorter: true,
             hideInSearch: true,
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>
+                        {dayjs(entity.createAt).format("DD-MM-YYYY")}
+                    </>
+                )
+            }
         },
         {
             title: 'CreateAt',

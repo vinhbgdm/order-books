@@ -36,7 +36,7 @@ export const AppProvider = (props: TProps) => {
 
     return (
         <>
-            {isAppLoading === true ?
+            {isAppLoading === false ?
                 <CurrentAppContext.Provider value={{
                     // data share components
                     isAuthenticated, setIsAuthenticated, user, setUser, isAppLoading, setIsAppLoading
