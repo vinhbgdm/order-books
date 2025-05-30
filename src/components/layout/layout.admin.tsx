@@ -67,7 +67,7 @@ const LayoutAdmin = () => {
                             {
                                 key: '1',
                                 icon: <RiAdminFill />,
-                                label: 'Admin',
+                                label: <Link to="/admin">Admin</Link>,
                             },
                             {
                                 key: '2',
@@ -79,8 +79,7 @@ const LayoutAdmin = () => {
                                 icon: <UserOutlined />,
                                 label: 'Manage Users',
                                 children: [
-                                    { key: '6', label: 'Option 1' },
-                                    { key: '7', label: 'Option 2' },
+                                    { key: '6', label: <Link to="/admin/user">CRUD</Link> },
                                 ],
                             },
                             {
