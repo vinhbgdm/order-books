@@ -1,10 +1,10 @@
-import { getUsersAPI } from '@/services/api';
+import { deleteUserAPI, getUsersAPI } from '@/services/api';
 import { dateRangeValidate } from '@/services/helper';
 import { CloudUploadOutlined, DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from '@ant-design/icons';
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components'
 import { useRef, useState } from 'react';
 import DetailUser from './detail.user';
-import { Button } from 'antd';
+import { App, Button, Popconfirm } from 'antd';
 import CreateUser from './create.user';
 import ImportUser from './import.user';
 import { CSVLink } from 'react-csv';
@@ -35,6 +35,24 @@ const TableUser = () => {
 
     const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
     const [dataUpdate, setDataUpdate] = useState<IUserTable | null>(null);
+
+    const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
+    const { message, notification } = App.useApp();
+
+    const handleDeleteUser = async (_id: string) => {
+        setIsDeleteUser(true);
+        const res = await deleteUserAPI(_id);
+        if (res && res.data) {
+            message.success('Xóa user thành công');
+            refreshTable();
+        } else {
+            notification.error({
+                message: 'Đã có lỗi xảy ra',
+                description: res.message
+            })
+        }
+        setIsDeleteUser(false)
+    }
 
     const columns: ProColumns<IUserTable>[] = [
         {
@@ -88,10 +106,20 @@ const TableUser = () => {
                                 setOpenModalUpdate(true);
                             }}
                         />
-                        <DeleteTwoTone
-                            twoToneColor='#ff4d4f'
-                            style={{ cursor: 'pointer', marginRight: 15 }}
-                        />
+                        <Popconfirm
+                            placement='leftTop'
+                            title={"Xác nhận xóa user"}
+                            description={"Bạn có chắn chắn muốn xóa user này ?"}
+                            onConfirm={() => handleDeleteUser(entity._id)}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                            okButtonProps={{ loading: isDeleteUser }}
+                        >
+                            <DeleteTwoTone
+                                twoToneColor='#ff4d4f'
+                                style={{ cursor: 'pointer', marginRight: 15 }}
+                            />
+                        </Popconfirm>
                     </>
                 )
             },

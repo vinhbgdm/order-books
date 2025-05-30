@@ -17,3 +17,7 @@ npm install --save-exact @ant-design/pro-components@2.8.7
 npm install --save-exact dayjs@1.11.13 (convert date)
 
 npm install --save-exact exceljs@4.4.0 (excel)
+
+npm i --save-exact react-csv@2.2.2
+
+npm i --save-exact --save-dev @types/react-csv@1.1.10
