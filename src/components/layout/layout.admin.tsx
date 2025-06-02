@@ -85,7 +85,7 @@ const LayoutAdmin = () => {
                             {
                                 key: '4',
                                 icon: <BookOutlined />,
-                                label: 'Manage Books',
+                                label: <Link to="/admin/book">Manage Books</Link>,
                             },
                             {
                                 key: '5',
